@@ -1,1 +1,51 @@
-<p>double works!</p>
+<div class="content">
+  <div class="double-game">
+    <div class="double-game-container">
+      <div class="roulette-container">
+        <div class="roulette">
+          <div class="double-roulette-digits">
+            <div class="double-roulette-digits-wrapper">
+              <span>0</span>
+              <span>1</span>
+              <span>8</span>
+              <span>2</span>
+              <span>9</span>
+              <span>3</span>
+              <span>10</span>
+              <span>4</span>
+              <span>11</span>
+              <span>5</span>
+              <span>12</span>
+              <span>6</span>
+              <span>13</span>
+              <span>7</span>
+              <span>14</span>
+            </div>
+          </div>
+          <img class="kek" src="../../assets/group-36@3x.png" width="300" height="300">
+        </div>
+        <div class="roulette-cursor">
+          <mat-icon>arrow_back_ios</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="double-game-history">
+
+      <!--<mat-progress-bar mode="determinate" [value]="statusBarValue"></mat-progress-bar>-->
+
+      <h3 class="history-game-title">История игр</h3>
+      <div class="history-items">
+        <div class="history-item-color"
+             *ngFor="let item of doubleGameHistory"
+             [ngClass]="getClass(item)"
+             [@inAnimation]>
+          <span>{{item}}</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!--<button (click)="click()">click</button>-->
+</div>
+

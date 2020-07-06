@@ -1,0 +1,120 @@
+.content {
+  width: 1024px;
+  background: rgb(12,18,21,1);
+  margin: 0 auto;
+  //height: 100%;
+  color: white;
+  border-left: 1px solid grey;
+}
+
+.double-game {
+  margin: 10px;
+}
+
+.roulette-container {
+  width: 300px;
+  height: 300px;
+  position: relative;
+}
+
+.roulette {
+  transition: transform 6s cubic-bezier(.22, 1, .36, 1);
+  //15s cubic-bezier(.22,1,.36,1) 1s
+  width: 300px;
+  height: 300px;
+}
+
+.roulette-cursor {
+  position: absolute;
+  top: 150px;
+  left: 50px;
+}
+
+.lol {
+  position: absolute;
+  top: 167px;
+  left: 56px;
+  transform: rotate(90deg);
+}
+
+.double-roulette-digits {
+  position: absolute;
+  transform: rotate(252deg);
+}
+
+.double-roulette-digits-wrapper {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;
+}
+
+.double-roulette-digits-wrapper > * {
+  user-select: none;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2rem;
+  height: 2rem;
+  margin: -1rem;
+}
+
+.double-roulette-digits-wrapper span {
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+@for $i from 1 to 16 {
+  .double-roulette-digits-wrapper > span:nth-of-type(#{$i}) {
+    transform: rotate(($i - 1) * 24deg) translateY(-133px) rotateX(180deg) rotateY(180deg);
+  }
+}
+
+.double-roulette-digits-wrapper > span:first-of-type {
+  transform: rotate(0deg) translateY(-133px) rotateX(180deg) rotateY(180deg);
+}
+
+// history
+.double-game-history {
+  width: 300px;
+  height: 50px;
+}
+
+.history-game-title {
+  margin: 20px 0;
+}
+
+.history-items {
+  display: flex;
+  justify-content: flex-start;
+
+}
+
+.history-item-color {
+  width: 30px;
+  height: 30px;
+  font-size: 13px;
+  border-radius: 50%;
+  margin: 4px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.red {
+  background-color: rgb(238, 75, 42, 1);
+}
+
+.black {
+  background-color: rgb(72, 76, 82, 1);
+}
+
+.green {
+  background-color: rgb(67, 174, 13, 1);
+}
