@@ -1,7 +1,8 @@
-import {Component, ElementRef, OnInit, AfterViewInit} from '@angular/core';
+import {Component, ElementRef, OnInit, AfterViewInit, PipeTransform, Pipe} from '@angular/core';
 import {DoubleService} from "../shared/services/double.service";
 import {transition, trigger, style, animate, group, query, keyframes} from "@angular/animations";
-import {interval} from "rxjs";
+import {interval, Observable, timer} from "rxjs";
+import {map} from "rxjs/internal/operators";
 
 @Component({
   selector: 'app-double',
@@ -11,8 +12,7 @@ import {interval} from "rxjs";
     trigger(
       'inAnimation',
       [
-        transition(
-          ':enter',
+        transition(':enter',
           [
             style({opacity: 0}),
             animate('0.5s ease-out',
@@ -32,11 +32,20 @@ import {interval} from "rxjs";
           ]
         ),
       )
+    ]),
+    trigger('flipAnimation', [
+      transition(':enter', [
+        style({'transform': 'rotateY(0deg)'}),
+        animate('1s ease-in',
+          style({'transform': 'rotateY(90deg)'})
+        )
+      ])
     ])
   ]
 })
 export class DoubleComponent implements OnInit {
 
+  counter = 1200;
 
   public winDegree: number = 0;
   public doubleGameHistory: Array<number> = [];
@@ -55,8 +64,16 @@ export class DoubleComponent implements OnInit {
     this.state$ = this.ds.state$.subscribe((obj)=> {
       this.status = obj.state;
       // console.log(obj);
-      if (obj.state === 'ROTATE') {this.rotateRoulette(obj.value)}
-      if (obj.state === 'RESULT') {this.addHistory(obj.value)}
+      if (obj.state === 'ROTATE') {
+        this.rotateRoulette(obj.value)
+      }
+      if (obj.state === 'RESULT') {
+        this.addHistory(obj.value)
+      }
+      if (obj.state === 'WAIT') {
+        this.counter = 1200;
+        this.setTimer()
+      }
     });
   }
 
@@ -100,5 +117,26 @@ export class DoubleComponent implements OnInit {
     }
   }
 
+  public setTimer() {
+    let subscription =timer(0, 17).subscribe(() => {
+      if(this.counter == 0) {subscription.unsubscribe()}
+      --this.counter;
+    });
+  }
 
 }
+
+@Pipe({
+  name: "formatTime"
+})
+export class FormatTimePipe implements PipeTransform {
+  transform(value: number): string {
+    const minutes: number = Math.floor(value / 60);
+    return (
+      ("00" + minutes).slice(-2) +
+      ":" +
+      ("00" + Math.floor(value - minutes * 60)).slice(-2)
+    );
+  }
+}
+

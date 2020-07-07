@@ -6,7 +6,6 @@ import {Subject, Observable, of, BehaviorSubject, timer} from "rxjs";
 })
 export class DoubleService {
 
-
   public state: BehaviorSubject<any>;
   public state$: Observable<any>;
   public result: number;

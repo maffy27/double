@@ -96,6 +96,16 @@
   transform: translate(-50%, -50%)
 }
 
+.timer {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .raffling{
 display: flex;
 flex-direction: column;
