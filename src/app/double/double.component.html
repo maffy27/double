@@ -1,6 +1,7 @@
 <div class="content">
   <div class="double-game">
     <div class="double-game-container">
+
       <div class="roulette-container">
         <div class="roulette">
           <div class="double-roulette-digits">
@@ -27,18 +28,39 @@
         <div class="roulette-cursor">
           <mat-icon>arrow_back_ios</mat-icon>
         </div>
+        <div class="roulette-status">
+
+          <div class="roulette-status" *ngIf="status == 'WAIT'" [@profileAnimation] id="cont" >
+            <svg id="svg" width="200" height="200" viewPort="0 0 100 100" version="1.1"
+                 xmlns="http://www.w3.org/2000/svg">
+              <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48"
+                      stroke-dashoffset="0"></circle>
+              <circle id="bar" class="bar" r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48"
+                      stroke-dashoffset="0"></circle>
+            </svg>
+          </div>
+
+          <div class="roulette-status raffling"  *ngIf="status == 'ROTATE'">
+          <span>Розыгрыш</span>
+          </div>
+
+          <div class="roulette-status raffling rafflig-result" *ngIf="status == 'RESULT'" [ngClass]="getColor(doubleGameHistory[0])">
+          <span>{{getColor(doubleGameHistory[0])}}</span>
+          </div>
+
+        </div>
       </div>
+
     </div>
 
     <div class="double-game-history">
 
-      <!--<mat-progress-bar mode="determinate" [value]="statusBarValue"></mat-progress-bar>-->
 
       <h3 class="history-game-title">История игр</h3>
       <div class="history-items">
         <div class="history-item-color"
              *ngFor="let item of doubleGameHistory"
-             [ngClass]="getClass(item)"
+             [ngClass]="getColor(item)"
              [@inAnimation]>
           <span>{{item}}</span></div>
       </div>
@@ -46,6 +68,6 @@
 
   </div>
 
-  <!--<button (click)="click()">click</button>-->
 </div>
+
 

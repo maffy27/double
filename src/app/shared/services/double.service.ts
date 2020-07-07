@@ -1,23 +1,39 @@
 import {Injectable} from '@angular/core';
-import {Subject, Observable, of, BehaviorSubject} from "rxjs";
+import {Subject, Observable, of, BehaviorSubject, timer} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DoubleService {
 
-  public value: Subject<number>;
+
+  public state: BehaviorSubject<any>;
+  public state$: Observable<any>;
+  public result: number;
+
 
   constructor() {
-    this.value = new Subject<number>();
-    setInterval(()=> {
-      let val = this.getValue();
-      this.value.next(val);
-    }, 12000);
+    this.state = new BehaviorSubject<any>({state: 'WAIT'});
+    this.state$ = this.state.asObservable();
+
+    timer(30000,30000).subscribe(()=>{this.state.next({state: 'WAIT'})});
+    timer(20000,30000).subscribe(()=>{this.state.next({state: 'ROTATE', value: this.getValue()})});
+    timer(26000,30000).subscribe(()=>{this.state.next({state: 'RESULT', value: this.result})});
+
   }
 
-  private getValue(): number {
-    return Math.floor(Math.random() * 14);
+  private getValue() {
+    this.result = Math.floor(Math.random() * 14);
+    return this.result;
   }
 
 }
+
+
+// public value: Subject<number>;
+
+// this.value = new Subject<number>();
+// setInterval(()=> {
+//   let val = this.getValue();
+//   this.value.next(val);
+// }, 12000);
